@@ -1,0 +1,29 @@
+<div class="gamification-component level-progress">
+  <h3>Level Progress</h3>
+  <div class="level-info">
+    <div class="level-badge">
+      <span class="level-number">{{ include.level.number }}</span>
+      <span class="level-name">{{ include.level.name }}</span>
+    </div>
+    <div class="progress-container">
+      <div class="progress-bar" style="width: {{ include.level.progress }}%"></div>
+      <div class="progress-text">
+        <span class="current-points">{{ include.level.points }}</span> / 
+        <span class="next-level-points">{{ include.level.next_level_points }}</span> points
+      </div>
+    </div>
+    <div class="level-details">
+      <p>{{ include.level.description }}</p>
+      {% if include.level.rewards %}
+        <div class="level-rewards">
+          <h4>Rewards:</h4>
+          <ul>
+            {% for reward in include.level.rewards %}
+              <li>{{ reward }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

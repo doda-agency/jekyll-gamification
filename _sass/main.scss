@@ -1,0 +1,17 @@
+// Import base styles
+@import "base/variables";
+@import "base/reset";
+@import "base/typography";
+
+// Import component styles
+@import "components/loader";
+@import "components/buttons";
+@import "components/cards";
+@import "components/forms";
+
+// Import gamification styles
+@import "gamification/badges";
+@import "gamification/levels";
+@import "gamification/points";
+@import "gamification/challenges";
+@import "gamification/quizzes";

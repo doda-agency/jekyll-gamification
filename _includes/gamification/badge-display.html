@@ -1,0 +1,26 @@
+<div class="gamification-component badge-display">
+  <h3>Badges</h3>
+  <div class="badges-container">
+    {% if include.badges %}
+      {% for badge in include.badges %}
+        <div class="badge-item {% if badge.earned %}earned{% else %}locked{% endif %}" data-badge-id="{{ badge.id }}">
+          <div class="badge-icon">
+            {% if badge.earned %}
+              <img src="{{ badge.icon | relative_url }}" alt="{{ badge.name }}" />
+            {% else %}
+              <div class="locked-badge">
+                <i class="fas fa-lock"></i>
+              </div>
+            {% endif %}
+          </div>
+          <div class="badge-info">
+            <h4>{{ badge.name }}</h4>
+            <p>{{ badge.description }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>No badges available yet.</p>
+    {% endif %}
+  </div>
+</div>

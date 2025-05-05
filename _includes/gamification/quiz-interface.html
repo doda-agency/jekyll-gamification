@@ -1,0 +1,90 @@
+<div class="gamification-component quiz-interface" data-quiz-id="{{ include.quiz.id }}">
+  <div class="quiz-header">
+    <h3 class="quiz-title">{{ include.quiz.title }}</h3>
+    <div class="quiz-meta">
+      <span class="quiz-questions-count">{{ include.quiz.questions.size }} Questions</span>
+      <span class="quiz-points">{{ include.quiz.points }} Points</span>
+    </div>
+  </div>
+  
+  <div class="quiz-description">
+    <p>{{ include.quiz.description }}</p>
+  </div>
+  
+  <div class="quiz-content" id="quiz-content-{{ include.quiz.id }}">
+    <div class="quiz-start-screen" id="quiz-start-{{ include.quiz.id }}">
+      <p>Ready to test your knowledge?</p>
+      <button class="quiz-start-button" onclick="startQuiz('{{ include.quiz.id }}')">Start Quiz</button>
+    </div>
+    
+    <div class="quiz-questions" id="quiz-questions-{{ include.quiz.id }}" style="display: none;">
+      {% for question in include.quiz.questions %}
+        <div class="quiz-question" id="question-{{ include.quiz.id }}-{{ forloop.index }}" style="display: none;">
+          <h4 class="question-text">{{ question.text }}</h4>
+          
+          <div class="question-options">
+            {% for option in question.options %}
+              <div class="question-option">
+                <input type="radio" 
+                       name="question-{{ include.quiz.id }}-{{ forloop.parent.index }}" 
+                       id="option-{{ include.quiz.id }}-{{ forloop.parent.index }}-{{ forloop.index }}" 
+                       value="{{ forloop.index }}"
+                       data-correct="{{ option.correct | default: false }}">
+                <label for="option-{{ include.quiz.id }}-{{ forloop.parent.index }}-{{ forloop.index }}">
+                  {{ option.text }}
+                </label>
+              </div>
+            {% endfor %}
+          </div>
+          
+          <div class="question-feedback" style="display: none;">
+            <div class="feedback-correct" style="display: none;">
+              <i class="fas fa-check-circle"></i> Correct!
+              {% if question.explanation %}
+                <p class="explanation">{{ question.explanation }}</p>
+              {% endif %}
+            </div>
+            <div class="feedback-incorrect" style="display: none;">
+              <i class="fas fa-times-circle"></i> Incorrect
+              {% if question.explanation %}
+                <p class="explanation">{{ question.explanation }}</p>
+              {% endif %}
+            </div>
+          </div>
+          
+          <div class="question-navigation">
+            {% unless forloop.first %}
+              <button class="prev-question" onclick="showPreviousQuestion('{{ include.quiz.id }}', {{ forloop.index }})">Previous</button>
+            {% endunless %}
+            
+            {% if forloop.last %}
+              <button class="submit-answer" onclick="submitQuiz('{{ include.quiz.id }}')">Submit Quiz</button>
+            {% else %}
+              <button class="next-question" onclick="showNextQuestion('{{ include.quiz.id }}', {{ forloop.index }})">Next</button>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    
+    <div class="quiz-results" id="quiz-results-{{ include.quiz.id }}" style="display: none;">
+      <h4>Quiz Results</h4>
+      <div class="results-summary">
+        <div class="score-display">
+          <span class="score-value" id="quiz-score-{{ include.quiz.id }}">0</span>
+          <span class="score-total">/{{ include.quiz.questions.size }}</span>
+        </div>
+        <div class="points-earned">
+          <span id="points-earned-{{ include.quiz.id }}">0</span> points earned
+        </div>
+      </div>
+      
+      <div class="results-feedback" id="results-feedback-{{ include.quiz.id }}"></div>
+      
+      <div class="results-actions">
+        <button class="review-answers" onclick="reviewQuizAnswers('{{ include.quiz.id }}')">Review Answers</button>
+        <button class="retake-quiz" onclick="retakeQuiz('{{ include.quiz.id }}')">Retake Quiz</button>
+      </div>
+    </div>
+  </div>
+</div>

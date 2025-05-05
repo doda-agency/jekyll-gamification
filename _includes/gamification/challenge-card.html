@@ -1,0 +1,58 @@
+<div class="gamification-component challenge-card" data-challenge-id="{{ include.challenge.id }}">
+  <div class="challenge-header">
+    <h3 class="challenge-title">{{ include.challenge.title }}</h3>
+    <div class="challenge-status">
+      {% if include.challenge.completed %}
+        <span class="status-badge completed">
+          <i class="fas fa-check-circle"></i> Completed
+        </span>
+      {% else %}
+        <span class="status-badge available">
+          <i class="fas fa-hourglass-half"></i> Available
+        </span>
+      {% endif %}
+    </div>
+  </div>
+  
+  <div class="challenge-content">
+    <p class="challenge-description">{{ include.challenge.description }}</p>
+    
+    <div class="challenge-details">
+      <div class="challenge-difficulty">
+        <span class="detail-label">Difficulty:</span>
+        <span class="detail-value">
+          {% assign difficulty_level = include.challenge.difficulty | default: 1 %}
+          {% for i in (1..5) %}
+            {% if i <= difficulty_level %}
+              <i class="fas fa-star"></i>
+            {% else %}
+              <i class="far fa-star"></i>
+            {% endif %}
+          {% endfor %}
+        </span>
+      </div>
+      
+      <div class="challenge-points">
+        <span class="detail-label">Points:</span>
+        <span class="detail-value">{{ include.challenge.points | default: 10 }}</span>
+      </div>
+      
+      {% if include.challenge.time_limit %}
+        <div class="challenge-time">
+          <span class="detail-label">Time Limit:</span>
+          <span class="detail-value">{{ include.challenge.time_limit }}</span>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  
+  <div class="challenge-footer">
+    <a href="{{ include.challenge.url | relative_url }}" class="challenge-button">
+      {% if include.challenge.completed %}
+        View Details
+      {% else %}
+        Start Challenge
+      {% endif %}
+    </a>
+  </div>
+</div>

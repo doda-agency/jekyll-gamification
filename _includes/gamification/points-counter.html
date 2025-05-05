@@ -1,0 +1,27 @@
+<div class="gamification-component points-counter">
+  <div class="points-display">
+    <i class="fas fa-star points-icon"></i>
+    <span class="points-value" id="user-points">{{ include.points | default: 0 }}</span>
+    <span class="points-label">points</span>
+  </div>
+  {% if include.show_history %}
+    <div class="points-history">
+      <h4>Recent Points</h4>
+      <ul class="points-history-list" id="points-history-list">
+        {% if include.history %}
+          {% for item in include.history %}
+            <li class="points-history-item">
+              <span class="points-amount {% if item.amount > 0 %}positive{% else %}negative{% endif %}">
+                {{ item.amount }}
+              </span>
+              <span class="points-reason">{{ item.reason }}</span>
+              <span class="points-time">{{ item.time }}</span>
+            </li>
+          {% endfor %}
+        {% else %}
+          <li class="points-history-item empty">No recent points activity</li>
+        {% endif %}
+      </ul>
+    </div>
+  {% endif %}
+</div>
